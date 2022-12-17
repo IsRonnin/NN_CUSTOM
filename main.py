@@ -5,10 +5,9 @@ import cv2
 import requests
 from bs4 import BeautifulSoup
 import json
-
+c = 0
 camera_num = 0
-# Model
-model_l = torch.hub.load('ultralytics/yolov5', 'yolov5n')  # or yolov5n - yolov5x6, custom
+model_l = torch.hub.load('ultralytics/yolov5', 'yolov5l')  # or yolov5n - yolov5x6, custom
 
 
 def get_motion():
@@ -21,8 +20,6 @@ def get_motion():
         print(e)
         return 0
 
-
-# Inference
 def nn(img, model):
     results = model(img)
     # Results
@@ -42,8 +39,6 @@ def get_cam_info():
     cv2.imwrite(img_name, frame)
     cam.release()
     return nn("opencv_frame.png", model_l)
-c = 0
-
 
 def counter():
     global c
@@ -59,7 +54,8 @@ print('Ready!')
 while True:
     try:
         #m = get_motion()
-        if input() == '1':
+        if input() == '':
+            print('work!')
             get_cam_info()
             time.sleep(0.2)
         else:
