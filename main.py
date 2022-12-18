@@ -5,11 +5,14 @@ import cv2
 import requests
 from bs4 import BeautifulSoup
 import json
+from PIL import Image
+from io import BytesIO
 c = 0
 camera_num = 0
-model_l = torch.hub.load('ultralytics/yolov5', 'yolov5l')  # or yolov5n - yolov5x6, custom
-
-
+model_l = 'Yolov7_custom.pt'  # or yolov5n - yolov5x6, custom
+url = 'https://images.squarespace-cdn.com/content/v1/6102a0b517117760b1defa27/1628170822958-WMVE9EU7QJ3COZV5I5ZE/7f18a2d9-ab9f-4832-b9cd-a4952a036404.jpg?format=500w'
+response = requests.get(url)
+img = Image.open(BytesIO(response.content))
 def get_motion():
     try:
         r = requests.get('http://192.168.0.112:80', timeout=3)
@@ -56,7 +59,8 @@ while True:
         #m = get_motion()
         if input() == '':
             print('work!')
-            get_cam_info()
+            #get_cam_info()
+            nn(img, model_l)
             time.sleep(0.2)
         else:
             time.sleep(0.2)
